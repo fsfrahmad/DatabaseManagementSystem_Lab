@@ -1,0 +1,78 @@
+Q1
+SELECT * FROM Orders WHERE RequiredDate < ShippedDate
+***
+
+
+Q2
+SELECT DISTINCT Country FROM Employees
+***
+
+
+Q3
+SELECT * FROM Employees WHERE ReportsTo IS NULL
+***
+
+
+Q4
+SELECT ProductName FROM Products WHERE Discontinued = 1
+***
+
+
+Q5
+SELECT OrderID FROM [Order Details] WHERE Discount = 0
+***
+
+
+Q6
+SELECT CompanyName FROM Customers WHERE Region IS NULL
+***
+
+
+Q7
+SELECT CompanyName, ContactName FROM Customers WHERE Country = 'UK' OR Country = 'USA'
+***
+
+
+Q8
+SELECT CompanyName FROM Suppliers WHERE HomePage IS NOT NULL
+***
+
+
+Q9
+SELECT DISTINCT ShipCountry FROM Orders WHERE YEAR(ShippedDate) =1997 
+***
+
+
+Q10
+SELECT CustomerID FROM Orders WHERE ShippedDate IS NULL
+***
+
+
+Q11
+SELECT SupplierID,CompanyName,City FROM Suppliers
+***
+
+
+Q12
+SELECT COUNT(DISTINCT Country) AS NoOfCountries	FROM Employees
+***
+
+
+SELECT * FROM Employees WHERE City = 'London'
+***
+
+
+Q13
+SELECT ProductName FROM Products WHERE Discontinued = 0
+***
+
+
+Q14 
+SELECT OrderID FROM [Order Details] WHERE Discount <= 0.1 AND Discount > 0
+***
+
+
+Q15
+SELECT EmployeeID, FirstName + ' ' + LastName as Name, HomePhone FROM Employees WHERE Region IS NULL
+***
+
