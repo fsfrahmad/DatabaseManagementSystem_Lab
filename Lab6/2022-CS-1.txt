@@ -1,0 +1,75 @@
+Q1
+SELECT (SELECT C.CustomerID FROM Customers C WHERE C.CustomerID = C1.CustomerID) as CustomerID, O.OrderID, O.OrderDate FROM Customers C1 LEFT JOIN Orders O ON C1.CustomerID = O.CustomerID
+***
+
+
+Q2
+SELECT C.CustomerID, (SELECT OrderID FROM Orders O WHERE O.CustomerID = C.CustomerID) AS OrderID ,(SELECT OrderID FROM Orders O WHERE O.CustomerID = C.CustomerID) AS OrderDate  FROM Customers C WHERE C.CustomerID NOT IN (SELECT CustomerID FROM Orders)
+***
+
+
+Q3
+SELECT (SELECT CustomerID FROM Customers WHERE Orders.CustomerID=Customers.CustomerID) AS CustomerID,OrderID,OrderDate FROM Orders GROUP BY OrderID,OrderDate,CustomerID HAVING Year(OrderDate)=1997 and MONTH(OrderDate) = 7 ORDER BY OrderID
+***
+
+
+Q4
+SELECT C.CustomerID, (SELECT Count(*) FROM Orders O WHERE O.CustomerID = C.CustomerID ) AS totalorders FROM Customers C
+***
+
+
+Q5
+SELECT E.EmployeeID, E.firstname, E.lastname FROM Employees AS E CROSS JOIN dbo.Products AS N WHERE N.ProductID <= 5 ORDER BY EmployeeID asc
+***
+
+
+Q6
+SELECT ProductName FROM Products WHERE UnitPrice > (SELECT AVG(UnitPrice) FROM Products)
+***
+
+
+Q7
+SELECT TOP(1) ProductName, UnitPrice FROM Products WHERE UnitPrice  < (SELECT MAX(UnitPrice) FROM Products) ORDER BY UnitPrice DESC
+***
+
+
+Q8
+SELECT EmployeeID, OrderDate FROM Orders WHERE OrderDate IN ( SELECT OrderDate  FROM Orders  WHERE OrderDate BETWEEN '1996-07-04 00:00:00.000' AND '1997-08-04 00:00:00.000')
+***
+
+
+Q9
+SELECT CustomerID,(SELECT COUNT(*) FROM Orders WHERE Customers.CustomerID = Orders.CustomerID) AS TotalOrders,(SELECT SUM(Quantity) FROM [Order Details] WHERE [Order Details].OrderID IN (SELECT OrderID FROM Orders WHERE Orders.CustomerID = Customers.CustomerID)) AS TotalQuantity FROM Customers WHERE Country = 'USA';
+***
+
+
+Q10
+SELECT (SELECT CustomerID FROM Customers WHERE Orders.CustomerID=Customers.CustomerID) AS CustomerID,(SELECT CompanyName FROM Customers WHERE Orders.CustomerID=Customers.CustomerID) AS CompanyName,OrderID, OrderDate FROM Orders WHERE OrderDate = '1997-07-04 00:00:00.000' GROUP BY OrderID, OrderDate,CustomerID ORDER BY OrderID;
+***
+
+
+Q11
+SELECT * FROM Employees E WHERE E.BirthDate < (SELECT BirthDate FROM Employees M WHERE E.ReportsTo = M.EmployeeID)
+***
+
+
+Q12
+SELECT FirstName + ' ' + LastName AS EmployeeName, DATEDIFF(YEAR, BirthDate, GETDATE()) AS Age, (SELECT DATEDIFF(YEAR, BirthDate, GETDATE()) FROM Employees M WHERE E.ReportsTo = M.EmployeeID) AS  ManagerAge FROM Employees E WHERE E.BirthDate < (SELECT BirthDate FROM Employees M WHERE E.ReportsTo = M.EmployeeID)
+***
+
+
+Q13
+SELECT (SELECT P.ProductName FROM Products P WHERE P.ProductID = OD.ProductID) AS ProductName, (SELECT O.OrderDate FROM Orders O WHERE O.OrderID = OD.OrderID) AS OrderDate FROM [Order Details] OD WHERE OD.OrderID = (SELECT OrderID FROM Orders WHERE OrderDate =  '1997-08-08 00:00:00.000')
+***
+
+
+Q14
+SELECT ShipAddress AS Address, ShipCity AS City, ShipCountry AS Country FROM Orders WHERE EmployeeID IN (SELECT EmployeeID FROM Employees WHERE FirstName = 'Anne') AND ShippedDate > RequiredDate
+***
+
+
+Q15
+SELECT DISTINCT o.ShipCountry FROM Orders o WHERE o.OrderID IN (SELECT od.OrderID FROM [Order Details] od JOIN Products p ON p.ProductID = od.ProductID JOIN Categories c ON c.CategoryID = p.CategoryID WHERE c.CategoryID = 1)
+***
+
+

@@ -1,0 +1,64 @@
+Q1
+SELECT Customers.CustomerID, Orders.OrderID, Orders.OrderDate FROM Customers LEFT OUTER JOIN Orders ON Customers.CustomerID = Orders.CustomerID
+***
+
+
+Q2
+SELECT C.CustomerID, O.OrderID, O.OrderDate FROM Customers C LEFT JOIN Orders O ON C.CustomerID = O.CustomerID WHERE O.OrderID IS NULL
+***
+
+
+Q3
+SELECT Customers.CustomerID, Orders.OrderID, Orders.OrderDate FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID WHERE MONTH(Orders.OrderDate) = 7 and YEAR(Orders.OrderDate) = 1997;
+***
+
+
+Q4
+SELECT C.CustomerID, COUNT(O.OrderID) AS totalorders FROM Customers C LEFT JOIN Orders O ON C.CustomerID = O.CustomerID GROUP BY C.CustomerID;
+***
+
+
+Q5
+SELECT E1.EmployeeID,E1.FirstName,E1.LastName FROM Employees AS E1,Employees AS E2 WHERE E2.EmployeeID % 2 = 0 OR E2.EmployeeID = 3 ORDER BY EmployeeID;
+***
+
+
+Q6
+SELECT EmployeeID, GETDATE() as Date FROM Employees
+***
+
+
+Q7
+SELECT C.CustomerID, COUNT(DISTINCT O.OrderID) AS totalorders, SUM(OD.Quantity) as  totalquantity FROM Customers C INNER JOIN Orders O ON C.CustomerID = O.CustomerID INNER JOIN [Order Details] OD ON O.OrderID = OD.OrderID WHERE C.Country = 'USA' GROUP BY C.CustomerID;
+***
+
+
+Q8
+SELECT Customers.CustomerID, Customers.CompanyName , Orders.OrderID, Orders.OrderDate FROM Customers INNER JOIN Orders ON Customers.CustomerID = Orders.CustomerID AND Orders.OrderDate = '1997-07-04 00:00:00.000'
+***
+
+
+Q9
+SELECT E1.* FROM Employees E1 JOIN Employees E2 ON E1.ReportsTo = E2.EmployeeID AND E1.BirthDate < E2.BirthDate
+***
+
+
+Q10
+SELECT E1.FirstName + ' ' + E1.LastName as EmployeeName, DATEDIFF(YEAR, E1.BirthDate, GETDATE()) AS Age, DATEDIFF(YEAR, E2.BirthDate, GETDATE()) AS [Manager Age] FROM Employees E1 JOIN Employees E2 ON E1.ReportsTo = E2.EmployeeID AND E1.BirthDate < E2.BirthDate;
+***
+
+
+Q11
+SELECT P.ProductName, O.OrderDate FROM Products P JOIN [Order Details] OD ON P.ProductID = OD.ProductID JOIN Orders O ON OD.OrderID = O.OrderID WHERE O.OrderDate = '1997-08-08 00:00:00.000' ORDER BY P.ProductID
+***
+
+
+Q12
+SELECT O.ShipAddress as Address, O.ShipCity as City, O.ShipCountry as Country FROM Orders O JOIN Employees E ON O.EmployeeID = E.EmployeeID AND E.FirstName = 'Anne' WHERE O.ShippedDate > O.RequiredDate
+***
+
+
+Q13
+SELECT DISTINCT O.ShipCountry as Country FROM Orders O JOIN [Order Details] OD ON O.OrderID = OD.OrderID JOIN Products P ON OD.ProductID = P.ProductID JOIN Categories C ON C.CategoryID = P.CategoryID WHERE C.CategoryName = 'Beverages'
+***
+
